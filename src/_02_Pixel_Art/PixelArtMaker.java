@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -20,6 +21,7 @@ public class PixelArtMaker implements MouseListener, ActionListener {
 	private JFrame window;
 	private GridInputPanel gip;
 	private GridPanel gp;
+	boolean isNew =false;
 	ColorSelectionPanel csp;
 	private JButton save;
 	private JButton neww;
@@ -37,7 +39,7 @@ public class PixelArtMaker implements MouseListener, ActionListener {
 
 	public void submitGridData(int w, int h, int r, int c) {
 		gp = new GridPanel(w, h, r, c);
-		if (new File("src/_02_Pixel_Art/saved.dat").exists()) {
+		if (new File("src/_02_Pixel_Art/saved.dat").exists()&&!isNew) {
 			gp = load();
 		}
 		csp = new ColorSelectionPanel();
@@ -51,6 +53,7 @@ public class PixelArtMaker implements MouseListener, ActionListener {
 		window.add(save);
 		window.add(neww);
 		gp.repaint();
+		
 		gp.addMouseListener(this);
 		window.pack();
 
@@ -92,17 +95,17 @@ public class PixelArtMaker implements MouseListener, ActionListener {
 		if(buttonPressed.getText().equals("Save")) {
 			save(gp);
 			System.out.println("saving");
+			System.out.println(".");
+			System.out.println(".");
+			System.out.println(".");
+			System.out.println(".");
+			System.out.println("saved");
 		}
 		else if (buttonPressed.getText().equals("New")) {
-			
-			gip = new GridInputPanel(this);
-			window = new JFrame("Pixel Art");
-			window.setLayout(new FlowLayout());
-			window.setResizable(false);
-			window.add(gip);
-			window.pack();
-			window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			window.setVisible(true);
+			window.setVisible(false);
+			isNew=true;
+		start();
+		
 		}
 	}
 
